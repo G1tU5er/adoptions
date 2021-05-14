@@ -1,4 +1,4 @@
-package com.p5.adoptions.controllers;
+package com.p5.adoptions.api.controllers;
 
 import com.p5.adoptions.model.Animal;
 import com.p5.adoptions.repository.AnimalStore;
@@ -55,7 +55,7 @@ public class AnimalController {
     }
     @DeleteMapping({"/name"})
     public void deleteAnimal(@PathVariable(name = "name") String name){
-
+  
         List<Animal>available = AnimalStore.available;
         for (int i=0; i<available.size(); i++){
 
