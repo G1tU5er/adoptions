@@ -12,6 +12,7 @@ public class AnimalStore {
         {
             add(new Dog("Alfi", "http://www.pngall.com/wp-content/uploads/2016/03/Cat-PNG-9.png"));
             add(new Dog("Alfi", "http://www.pngall.com/wp-content/uploads/2016/03/Cat-PNG-9.png"));
+
             add(new Cat("Alfi", "http://www.pngall.com/wp-content/uploads/2016/03/Cat-PNG-9.png"));
             add(new Cat("Alfi", "http://www.pngall.com/wp-content/uploads/2016/03/Cat-PNG-6.png"));
 

@@ -1,4 +1,4 @@
-package com.p5.adoptions.repository.cats;
+package com.p5.adoptions.repository.Dogs;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,11 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Cat {
+public class Dog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
 
+    private Integer id;
     private String name;
     private String url;
 
@@ -25,20 +25,23 @@ public class Cat {
     }
 
     public String getName() {
+
         return name;
     }
 
-    public Cat setName(String name) {
+    public Dog setName(String name) {
         this.name = name;
         return this;
     }
 
     public String getUrl() {
+
         return url;
     }
 
-    public Cat setUrl(String url) {
+    public Dog setUrl(String url) {
         this.url = url;
         return this;
     }
+
 }
