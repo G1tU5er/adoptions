@@ -1,15 +1,19 @@
 package com.p5.adoptions.model;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 public class Animal {
+    protected Integer id;
     private String name;
     private String photoUrl;
 
     public Animal() {
     }
 
-    public Animal(String name, String photoUrl) {
+    public Animal(String name, String photoUrl, Integer id) {
         this.name = name;
         this.photoUrl = photoUrl;
+        this.id = id;
     }
 
     public void speak() {
@@ -41,5 +45,13 @@ public class Animal {
 
         this.photoUrl = photoUrl;
         return this;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
