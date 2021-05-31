@@ -1,6 +1,6 @@
 package com.p5.adoptions.repository;
 
-import com.p5.adoptions.model.Animal;
+import com.p5.adoptions.model.AnimalDTO;
 import com.p5.adoptions.model.CatDTO;
 import com.p5.adoptions.model.DogDTO;
 
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AnimalStore {
-    public static final List<Animal> available = new ArrayList<Animal>() {
+    public static final List<AnimalDTO> available = new ArrayList<AnimalDTO>() {
         {
             add(new DogDTO("Alfi", "http://www.pngall.com/wp-content/uploads/2016/03/Cat-PNG-9.png", 1));
             add(new DogDTO("Malaga", "http://www.pngall.com/wp-content/uploads/2016/03/Cat-PNG-9.png", 2));

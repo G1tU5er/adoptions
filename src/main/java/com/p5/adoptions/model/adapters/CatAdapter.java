@@ -8,11 +8,11 @@ import java.util.List;
 
 public class CatAdapter {
     public static Cat fromDto(CatDTO catDTO){
-        return new Cat().setName(catDTO.getName()).setUrl(catDTO.getPhotoUrl());
+        return (Cat) new Cat().setName(catDTO.getName()).setPhotoUrl(catDTO.getPhotoUrl());
     }
 
     public static CatDTO toDto(Cat cat){
-        return new CatDTO(cat.getName(), cat.getUrl(), cat.getId());
+        return new CatDTO(cat.getName(), cat.getPhotoUrl(), cat.getId());
 
     }
 

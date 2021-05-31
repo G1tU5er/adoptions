@@ -38,8 +38,7 @@ public class DogService {
         if (name==null || name.equals("")){
             throw new RuntimeException("Must specify name");
         }
-
         return DogAdapter.toDto(dogRepository.findDogByName(name));
-
     }
+
 }
