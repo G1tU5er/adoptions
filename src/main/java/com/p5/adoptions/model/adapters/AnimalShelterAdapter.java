@@ -26,14 +26,15 @@ public class AnimalShelterAdapter {
         return new AnimalShelterDTO()
                 .setAddress(shelter.getAddress())
                 .setId(shelter.getId())
-                .setName(shelter.getName());
+                .setName(shelter.getName())
+                .setAnimals(AnimalAdapter.toListDto(shelter.getAnimals()));
+    }
+    public static List<AnimalShelterDTO> toListDto(List<AnimalShelter> animals){
+        List<AnimalShelterDTO> dtos = new ArrayList<>();
+        for (AnimalShelter animalShelter: animals){
+            dtos.add(toDto(animalShelter));
+        }
+        return dtos;
 
     }
-
-//    public static List<AnimalShelterDTO> toListDto(List<AnimalShelter>shelterList){
-//        List<AnimalShelterDTO> dtoList = new ArrayList<>();
-//        shelterList.forEach(animal -> dtoList.add(toDto(animal)));
-//        return dtoList;
-//
-//    }
 }
