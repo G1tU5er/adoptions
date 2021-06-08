@@ -9,6 +9,9 @@ import com.p5.adoptions.repository.animals.Animal;
 import com.p5.adoptions.repository.animals.AnimalRepository;
 import com.p5.adoptions.repository.shelter.AnimalShelter;
 import com.p5.adoptions.repository.shelter.AnimalShelterRepository;
+import com.p5.adoptions.service.exceptions.AnimalShelterNotFoundException;
+import com.p5.adoptions.service.exceptions.ShelterAddressException;
+import com.p5.adoptions.service.exceptions.Violation;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,6 +19,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 @Service
 @Validated
@@ -51,23 +55,32 @@ public class AnimalShelterService {
     @Validated(OnUpdate.class)
     public AnimalShelterDTO updateShelter(@Valid AnimalShelterDTO shelterDTO) {
         validateShelter(shelterDTO);
+//try catch block with exception propagation
+//        try {
+//            validateShelter(shelterDTO);
+//        } catch (RuntimeException ex) {
+//            Logger.getAnonymousLogger().warning(ex.getMessage());
+//            throw new RuntimeException(ex);
+//        }
 
         return AnimalShelterAdapter.toDto(animalShelterRepository.save(AnimalShelterAdapter.fromDto(shelterDTO)));
 
     }
 
     private void validateShelter(AnimalShelterDTO shelterDTO) {
-        if (shelterDTO.getAddress().toLowerCase(Locale.ROOT).contains("brasov")){
-            throw new RuntimeException("Shelter-ul nu este din Brasov!!! ");
+        if (!shelterDTO.getAddress().toLowerCase(Locale.ROOT).contains("brasov")) {
+            throw new ShelterAddressException(new Violation("address", "Shelter-ul nu este din Brasov!!!", shelterDTO.getAddress()));
         }
 
-        for (AnimalDTO animal : shelterDTO.getAnimals()){
-            if (!animal.getPhotoUrl().toLowerCase(Locale.ROOT).contains("https")){
+        for (AnimalDTO animal : shelterDTO.getAnimals()) {
+            if (!animal.getPhotoUrl().toLowerCase(Locale.ROOT).contains("https")) {
                 throw new RuntimeException("Animal nu are un URL valid");
             }
         }
 
-        animalShelterRepository.findById(shelterDTO.getId()).orElseThrow(() -> new RuntimeException("Shelter not found!!! "));
+        animalShelterRepository.findById(shelterDTO.getId())
+                .orElseThrow(() -> new AnimalShelterNotFoundException("Shelter not found!!! "));
+
 
     }
 
