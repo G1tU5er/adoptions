@@ -1,5 +1,7 @@
 package com.p5.adoptions.security;
 
+import com.p5.adoptions.model.UserDTO;
+import com.p5.adoptions.model.adapters.UserAdapter;
 import com.p5.adoptions.users.User;
 import com.p5.adoptions.users.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -32,20 +34,29 @@ public class MyUserDetailsService implements UserDetailsService {
         return new UserPrincipal(userOptional.get());
     }
     //Initialise DB with a default user
-    @Bean
-    private CommandLineRunner setUpDefaultUser(){
-        return args -> {
-            final String defaultEmail = "animalshelter@pentastagiu.io";
-            final String defaultPassword = "password";
+//    @Bean
+//    private CommandLineRunner setUpDefaultUser(){
+//        return args -> {
+//            final String defaultEmail = "animalshelter@pentastagiu.io";
+//            final String defaultPassword = "password";
+//
+//            Optional<User> defaultUser = userRepository.findByEmail(defaultEmail);
+//
+//            if (!defaultUser.isPresent()){
+//                userRepository.save(new User()
+//                                                 .setEmail(defaultEmail)
+//                        .setPassword(passwordEncoder.encode(defaultPassword)));
+//            }
+//
+//        };
+//    }
+    public void addUser(UserDTO userDto){
+        if (userDto.getEmail() == null && userDto.getPassword() == null){
+            throw new RuntimeException("User must have a email and a password!");
+        }
 
-            Optional<User> defaultUser = userRepository.findByEmail(defaultEmail);
+        UserAdapter userAdapter = new UserAdapter(passwordEncoder);
 
-            if (!defaultUser.isPresent()){
-                userRepository.save(new User()
-                                                 .setEmail(defaultEmail)
-                                                 .setPassword(defaultPassword));
-            }
-
-        };
+        userRepository.save(userAdapter.fromDto(userDto));
     }
 }

@@ -14,10 +14,6 @@ public class AnimalController {
     //call: api/v1/animals/Hello
 
     @GetMapping("/Hello")
-    /*public String greetOwner() {
-        String hello ="Hello world, from the animal shelter!";
-        return hello;
-    }*/
     public ResponseEntity<String> greetOwner(@RequestParam(name = "name", required = false) String ownerName) {
         String name = ownerName == null ? "world" : ownerName;
 
@@ -38,6 +34,7 @@ public class AnimalController {
         AnimalStore.available.add(animal);
         return ResponseEntity.ok(animal);
     }
+
     @PutMapping("/{name}")
     public void updateAnimal(@PathVariable(name = "name") String name, @RequestBody AnimalDTO updateAnimal){
 
