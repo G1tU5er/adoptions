@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("v1/shelters")
+@RequestMapping("/api/v1/shelters")
 public class AnimalShelterController {
     private final AnimalShelterService shelterService;
 
@@ -34,7 +34,7 @@ public class AnimalShelterController {
     }
 
     @PutMapping
-    private ResponseEntity<AnimalShelterDTO> updateShelter(@Valid @ RequestBody AnimalShelterDTO shelterDTO)  {
+    private ResponseEntity<AnimalShelterDTO> updateShelter(@Valid @RequestBody AnimalShelterDTO shelterDTO)  {
         return ResponseEntity.ok(shelterService.updateShelter(shelterDTO));
     }
 

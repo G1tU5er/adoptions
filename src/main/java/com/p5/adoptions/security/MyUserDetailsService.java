@@ -28,35 +28,39 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Optional<User> userOptional = userRepository.findByEmail(username);
-        if (!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             throw new UsernameNotFoundException(username);
         }
         return new UserPrincipal(userOptional.get());
     }
-    //Initialise DB with a default user
-//    @Bean
-//    private CommandLineRunner setUpDefaultUser(){
-//        return args -> {
-//            final String defaultEmail = "animalshelter@pentastagiu.io";
-//            final String defaultPassword = "password";
-//
-//            Optional<User> defaultUser = userRepository.findByEmail(defaultEmail);
-//
-//            if (!defaultUser.isPresent()){
-//                userRepository.save(new User()
-//                                                 .setEmail(defaultEmail)
-//                        .setPassword(passwordEncoder.encode(defaultPassword)));
-//            }
-//
-//        };
-//    }
-    public void addUser(UserDTO userDto){
-        if (userDto.getEmail() == null && userDto.getPassword() == null){
+   // Initialise DB with a default user
+  /*  @Bean
+    private CommandLineRunner setUpDefaultUser(){
+        return args -> {
+            final String defaultEmail = "animalshelter@pentastagiu.io";
+            final String defaultPassword = "password";
+
+            Optional<User> defaultUser = userRepository.findByEmail(defaultEmail);
+
+            if (!defaultUser.isPresent()){
+                userRepository.save(new User()
+                                                 .setEmail(defaultEmail)
+                        .setPassword(passwordEncoder.encode(defaultPassword)));
+            }
+
+        };
+    }*/
+
+    public UserDTO addUser(UserDTO userDto) {
+        if (userDto.getEmail() == null && userDto.getPassword() == null) {
             throw new RuntimeException("User must have a email and a password!");
         }
-
-        UserAdapter userAdapter = new UserAdapter(passwordEncoder);
-
-        userRepository.save(userAdapter.fromDto(userDto));
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        Optional<User> defaultUser = userRepository.findByEmail(userDto.getEmail());
+        if (!defaultUser.isPresent()) {
+            return UserAdapter.toDto(userRepository.save(UserAdapter.fromDto(userDto)));
+        }
+else
+    return null;
     }
 }

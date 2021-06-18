@@ -2,6 +2,7 @@ package com.p5.adoptions.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,23 +24,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.datasource = datasource;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/v1/animals/hello").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
-    }
+   @Override
+   protected void configure(HttpSecurity http) throws Exception {
+           http.csrf().disable()
+                   .authorizeRequests()
+                   .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                   .anyRequest().authenticated()
+                   .and()
+                   .httpBasic();
+
+       }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder)
-                .and()
-                .authenticationProvider(authenticationProvider())
-                .jdbcAuthentication()
+   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+       auth
+               .userDetailsService(userDetailsService)
+              .passwordEncoder(passwordEncoder)
+               .and()
+              .authenticationProvider(authenticationProvider())
+               .jdbcAuthentication()
                 .dataSource(datasource);
     }
 

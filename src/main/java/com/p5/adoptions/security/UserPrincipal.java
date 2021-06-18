@@ -22,11 +22,13 @@ public class UserPrincipal implements UserDetails{
 
     @Override
     public String getPassword() {
+
         return principal.getPassword();
     }
 
     @Override
     public String getUsername() {
+
         return principal.getEmail();
     }
 

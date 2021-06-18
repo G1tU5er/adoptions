@@ -10,6 +10,7 @@ import com.p5.adoptions.service.DogService;
 import com.p5.adoptions.users.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
 
@@ -29,19 +30,22 @@ public class UserController {
         return ResponseEntity.ok("Hello  " + name);
     }
 
-    //    @GetMapping()
-//    public ResponseEntity<List<UserDTO>> getAvailableUsers() {
-//        return ResponseEntity.ok(UserStore.available);
-//
-//    }
-    @PostMapping
-    public void addUser(@RequestBody UserDTO userDto){
+    @GetMapping()
+    public ResponseEntity<List<UserDTO>> getAvailableUsers() {
+        return ResponseEntity.ok(UserStore.available);
 
-         userDetailsService.addUser(userDto);
-      //  userDetailsService.setUpDefaultUser(userDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDto) {
+        if (userDetailsService.addUser(userDto) == null)
+            return ResponseEntity.badRequest().body(userDto);
+        else
+            return ResponseEntity.ok(userDetailsService.addUser(userDto));
+        //  userDetailsService.setUpDefaultUser(userDto);
     }
 //    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO user) {
-//        if (user == null && user.getName() == null && user.getPassword() == null && user.getEmail() == null) {
+//        if (user == null && user.getPassword() == null && user.getEmail() == null) {
 //            return ResponseEntity.badRequest().body(user);
 //        }
 //        UserStore.available.add(user);
@@ -63,14 +67,15 @@ public class UserController {
             }
         }
     }
-    @DeleteMapping({"/email"})
-    public void deleteUser(@PathVariable(name = "email") String email){
 
-        List<UserDTO>available = UserStore.available;
-        for (int i=0; i<available.size(); i++){
+    @DeleteMapping({"/email"})
+    public void deleteUser(@PathVariable(name = "email") String email) {
+
+        List<UserDTO> available = UserStore.available;
+        for (int i = 0; i < available.size(); i++) {
 
             UserDTO user = available.get(i);
-            if (user.getEmail().equals("email")){
+            if (user.getEmail().equals("email")) {
                 available.remove(i);
                 break;
             }

@@ -8,17 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter {
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserAdapter(BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public User fromDto(UserDTO userDTO){
+    public static User fromDto(UserDTO userDTO){
         if(userDTO.getEmail().equals("")){
-            userDTO.setEmail("Generic user");
+            userDTO.setEmail("Generic@email.com");
         }
-        return new User().setEmail(userDTO.getEmail()).setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        return new User().setEmail(userDTO.getEmail()).setPassword(userDTO.getPassword());
     }
 
     public static UserDTO toDto(User user){
