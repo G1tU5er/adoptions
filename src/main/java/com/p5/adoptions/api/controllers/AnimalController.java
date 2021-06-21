@@ -3,17 +3,20 @@ package com.p5.adoptions.api.controllers;
 import com.p5.adoptions.model.AnimalDTO;
 import com.p5.adoptions.repository.AnimalStore;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/animals")
+@PreAuthorize("isAuthorised()")
 public class AnimalController {
     //old way - no good! @RequestMapping(method = RequestMethod.GET, value = "/Hello")
     //call: api/v1/animals/Hello
 
     @GetMapping("/Hello")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<String> greetOwner(@RequestParam(name = "name", required = false) String ownerName) {
         String name = ownerName == null ? "world" : ownerName;
 
