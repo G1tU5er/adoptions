@@ -1,5 +1,7 @@
 package com.p5.adoptions.security;
 
+import com.p5.adoptions.model.UserDTO;
+import com.p5.adoptions.model.adapters.UserAdapter;
 import com.p5.adoptions.model.roles.RoleRepository;
 import com.p5.adoptions.model.roles.RolesEnum;
 import com.p5.adoptions.repository.roles.Role;
@@ -41,42 +43,53 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     // Initialise DB with a default user
-    @Bean
-    private CommandLineRunner setUpDefaultUser() {
-        return args -> {
-            final String defaultEmail = "animalshelter@pentastagiu.io";
-            final String defaultPassword = "password";
+  @Bean
+  private CommandLineRunner setUpDefaultUser() {
+      return args -> {
+           final String defaultEmail = "animalshelter@pentastagiu.io";
+          final String defaultPassword = "password";
 
-            Role moderatorRole = roleRepository.findByRole(RolesEnum.ROLE_MOD).orElseGet(() -> {
-                Role newRole = new Role().setRole(RolesEnum.ROLE_MOD);
+          Role moderatorRole = roleRepository.findByRole(RolesEnum.ROLE_MOD).orElseGet(() -> {
+               Role newRole = new Role().setRole(RolesEnum.ROLE_MOD);
                 return roleRepository.save(newRole);
-            });
+           });
 
             Optional<User> defaultUser = userRepository.findByEmail(defaultEmail);
 
-            if (!defaultUser.isPresent()) {
-                Set<Role> collectionRole = new HashSet<Role>();
-                collectionRole.add(moderatorRole);
-                userRepository.save(new User()
-                        .setEmail(defaultEmail)
-                        .setPassword(passwordEncoder.encode(defaultPassword))
-                     //   .setUserRoles(Collections.singleton(moderatorRole)))
-                           .setUserRoles(collectionRole));
-            }
+          if (!defaultUser.isPresent()) {
+               Set<Role> collectionRole = new HashSet<Role>();
+               collectionRole.add(moderatorRole);
+               userRepository.save(new User()
+                       .setEmail(defaultEmail)
+                       .setPassword(passwordEncoder.encode(defaultPassword))
+                    .setUserRoles(Collections.singleton(moderatorRole)));
+                         // .setUserRoles(collectionRole));
+          }
 
         };
     }
 
-//    public UserDTO addUser(UserDTO userDto) {
-//        if (userDto.getEmail() == null && userDto.getPassword() == null) {
-//            throw new RuntimeException("User must have a email and a password!");
-//        }
-//        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-//        Optional<User> defaultUser = userRepository.findByEmail(userDto.getEmail());
-//        if (!defaultUser.isPresent()) {
-//            return UserAdapter.toDto(userRepository.save(UserAdapter.fromDto(userDto)));
-//        }
-//else
-//    return null;
-//    }
+   /* public UserDTO addUser(UserDTO userDto) {
+        if (userDto.getEmail() == null && userDto.getPassword() == null) {
+            throw new RuntimeException("User must have a email and a password!");
+        }
+        Role moderatorRole = roleRepository.findByRole(RolesEnum.ROLE_MOD).orElseGet(() -> {
+                Role newRole = new Role().setRole(RolesEnum.ROLE_MOD);
+                return roleRepository.save(newRole);
+            });
+
+        Set<Role> collectionRole = new HashSet<Role>();
+        collectionRole.add(moderatorRole);
+
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userDto.setUserRoles(collectionRole);
+
+        Optional<User> defaultUser = userRepository.findByEmail(userDto.getEmail());
+        if (!defaultUser.isPresent()) {
+
+            return UserAdapter.toDto(userRepository.save(UserAdapter.fromDto(userDto)));
+        }
+else
+    return null;
+    }*/
 }

@@ -24,27 +24,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.datasource = datasource;
     }
 
-   @Override
-   protected void configure(HttpSecurity http) throws Exception {
-           //http.csrf().disable()
-       http
-                   .authorizeRequests()
-                   .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                   .antMatchers(HttpMethod.POST, "/v1/shelters/*").hasRole("USER")
-                   .anyRequest().authenticated()
-                   .and()
-                   .httpBasic();
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
-       }
+
+        http.authorizeRequests()
+                // .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                .antMatchers(HttpMethod.GET, "/v1/shelters/*").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/v1/shelters/*").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic()
+                .and().csrf().disable();
+
+    }
 
     @Override
-   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       auth
-               .userDetailsService(userDetailsService)
-              .passwordEncoder(passwordEncoder)
-               .and()
-              .authenticationProvider(authenticationProvider())
-               .jdbcAuthentication()
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder)
+                .and()
+                .authenticationProvider(authenticationProvider())
+                .jdbcAuthentication()
                 .dataSource(datasource);
     }
 

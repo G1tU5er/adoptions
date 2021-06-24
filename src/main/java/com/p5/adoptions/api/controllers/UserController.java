@@ -36,14 +36,14 @@ public class UserController {
 
     }
 
-//    @PostMapping
-//    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDto) {
-//        if (userDetailsService.addUser(userDto) == null)
-//            return ResponseEntity.badRequest().body(userDto);
-//        else
-//            return ResponseEntity.ok(userDetailsService.addUser(userDto));
-//        //  userDetailsService.setUpDefaultUser(userDto);
-//    }
+   // @PostMapping
+  /*  public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDto) {
+        if (userDetailsService.addUser(userDto) == null)
+            return ResponseEntity.badRequest().body(userDto);
+        else
+            return ResponseEntity.ok(userDetailsService.addUser(userDto));
+        //  userDetailsService.setUpDefaultUser(userDto);
+    }*/
 //    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO user) {
 //        if (user == null && user.getPassword() == null && user.getEmail() == null) {
 //            return ResponseEntity.badRequest().body(user);

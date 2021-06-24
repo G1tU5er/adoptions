@@ -13,11 +13,11 @@ public class UserAdapter {
         if(userDTO.getEmail().equals("")){
             userDTO.setEmail("Generic@email.com");
         }
-        return new User().setEmail(userDTO.getEmail()).setPassword(userDTO.getPassword());
+        return new User().setEmail(userDTO.getEmail()).setPassword(userDTO.getPassword()).setUserRoles(userDTO.getUserRoles());
     }
 
     public static UserDTO toDto(User user){
-        return new UserDTO(user.getId(), user.getPassword(),user.getEmail());
+        return new UserDTO(user.getId(), user.getPassword(),user.getEmail(), user.getUserRoles());
     }
 
     public static List<UserDTO> toListDto (List<User> userList){

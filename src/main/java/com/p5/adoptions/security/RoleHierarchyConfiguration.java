@@ -15,7 +15,7 @@ public class RoleHierarchyConfiguration extends GlobalMethodSecurityConfiguratio
     @Bean
     public RoleHierarchy roleHierarchy(){
        RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-       String hierarchy = "ROLE_ADMIN > ROLE_MODE \n ROLE_MOD > ROLE_USER";
+       String hierarchy = "ROLE_ADMIN > ROLE_MOD \n ROLE_MOD > ROLE_USER";
        roleHierarchy.setHierarchy(hierarchy);
        return roleHierarchy;
     }
