@@ -4,6 +4,7 @@ import com.p5.adoptions.model.AnimalShelterDTO;
 import com.p5.adoptions.repository.shelter.AnimalShelter;
 import com.p5.adoptions.service.AnimalShelterService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
