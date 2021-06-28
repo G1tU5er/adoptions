@@ -49,7 +49,8 @@ public class AnimalDTO {
         return id;
     }
 
-    public void setId(Integer id) {
+    public AnimalDTO setId(Integer id) {
         this.id = id;
+        return this;
     }
 }

@@ -12,6 +12,7 @@ import com.p5.adoptions.repository.shelter.AnimalShelterRepository;
 import com.p5.adoptions.service.exceptions.AnimalShelterNotFoundException;
 import com.p5.adoptions.service.exceptions.ShelterAddressException;
 import com.p5.adoptions.service.exceptions.Violation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -24,6 +25,11 @@ import java.util.logging.Logger;
 @Service
 @Validated
 public class AnimalShelterService {
+
+    //Field Injection e naspa! NU se foloseste!!!
+//    @Autowired
+//    private  AnimalShelterRepository fieldInjection;
+
     private final AnimalShelterRepository animalShelterRepository;
     private final AnimalRepository animalRepository;
 

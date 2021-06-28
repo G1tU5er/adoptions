@@ -4,6 +4,7 @@ import com.p5.adoptions.model.AnimalShelterDTO;
 import com.p5.adoptions.repository.shelter.AnimalShelter;
 import com.p5.adoptions.service.AnimalShelterService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,7 +28,7 @@ public class AnimalShelterController {
     private ResponseEntity <AnimalShelterDTO> getShelter(@PathVariable("id") Integer id){
         return ResponseEntity.ok(shelterService.getShelter(id));
     }
-
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     private ResponseEntity<AnimalShelterDTO> createShelter(@Valid @RequestBody AnimalShelterDTO shelterDTO)  {
         return ResponseEntity.ok(shelterService.createShelter(shelterDTO));
