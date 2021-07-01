@@ -56,14 +56,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
             Optional<User> defaultUser = userRepository.findByEmail(defaultEmail);
 
-          if (!defaultUser.isPresent()) {
-               Set<Role> collectionRole = new HashSet<Role>();
-               collectionRole.add(moderatorRole);
-               userRepository.save(new User()
-                       .setEmail(defaultEmail)
-                       .setPassword(passwordEncoder.encode(defaultPassword))
-                    .setUserRoles(Collections.singleton(moderatorRole)));
-                         // .setUserRoles(collectionRole));
+          if (!defaultUser.isPresent())
+          {
+              HashSet<Role> roles = new HashSet<>();
+              roles.add(moderatorRole);
+
+              userRepository.save(new User()
+                      .setEmail(defaultEmail)
+                      .setPassword(passwordEncoder.encode(defaultPassword))
+                      .setUserRoles(Collections.singleton(moderatorRole))
+                      .setUserRoles(roles));
           }
 
         };
